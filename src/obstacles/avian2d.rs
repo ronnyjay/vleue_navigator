@@ -8,7 +8,6 @@ use bevy::{
     math::{Vec3Swizzles, vec3},
     prelude::*,
 };
-use nalgebra::{Const, OPoint};
 
 use crate::{updater::CachableObstacle, world_to_mesh};
 
@@ -49,7 +48,7 @@ impl InnerObstacleSource for TypedShape<'_> {
         transform.scale = Vec3::ONE;
         let world_to_mesh = world_to_mesh(navmesh_transform);
 
-        let ref_to_world = |p: &OPoint<f32, Const<2>>| {
+        let ref_to_world = |p: &Vec2| {
             let mut v = vec3(p.x, 0.0, p.y);
             v = if up.is_negative_bitmask().count_ones() % 2 == 1 {
                 Quat::from_rotation_arc(Vec3::Y, up.into()).mul_vec3(v)
@@ -58,7 +57,7 @@ impl InnerObstacleSource for TypedShape<'_> {
             };
             transform.transform_point(v)
         };
-        let to_world = |p: OPoint<f32, Const<2>>| ref_to_world(&p);
+        let to_world = |p: Vec2| ref_to_world(&p);
 
         let to_navmesh = |v: Vec3| world_to_mesh.transform_point3(v).xy();
 
