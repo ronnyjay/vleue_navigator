@@ -1,6 +1,5 @@
 use avian2d::{
     parry::{
-        na::{Const, OPoint},
         shape::TypedShape,
     },
     prelude::{Collider, Sleeping},
@@ -9,6 +8,7 @@ use bevy::{
     math::{Vec3Swizzles, vec3},
     prelude::*,
 };
+use nalgebra::{Const, OPoint};
 
 use crate::{updater::CachableObstacle, world_to_mesh};
 
